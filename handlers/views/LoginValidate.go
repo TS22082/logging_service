@@ -2,7 +2,6 @@ package views
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -112,7 +111,6 @@ func LoginValidate(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 	}
 
-	fmt.Println("success")
 	http.SetCookie(w, cookie)
 	http.Redirect(w, r, "/docs/accounts", http.StatusFound)
 }
