@@ -1,0 +1,30 @@
+version: '3'
+
+tasks:
+  sass:
+    desc: "Compile Sass to CSS"
+    cmd: sass static/src/styles/:static/dist/styles/
+    silent: false
+
+  templ:
+    desc: "Generate Go templ files"
+    cmds: 
+    - templ fmt .
+    - templ generate
+    silent: false
+
+  js:
+    desc: "Builds ts to js in dist"
+    cmd: npm run build 
+    silent: false
+
+  dev:
+    desc: "Watch dev env"
+    watch: true
+    sources: 
+      - '**/*.scss'
+      - '**/*.templ'
+      - '**/*.ts'
+      - '**/*.js'
+    cmds:
+      - task -p templ sass js

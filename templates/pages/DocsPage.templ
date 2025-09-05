@@ -1,0 +1,157 @@
+package pages
+
+import "github.com/ts22082/logging-service/templates/components"
+import "github.com/ts22082/logging-service/utils"
+
+templ DocsPage(queryString string, subjects [5]string) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="/static/dist/styles/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/utils.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/reset.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/containers.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/buttons.css"/>
+		</head>
+		<body>
+			@components.Nav("Oggee", "docs")
+			<section class="jumbo">
+				<h1>Docs Page</h1>
+				<p>The platforms power is in its simplicity. Select a subject for detailed related to the topic.</p>
+			</section>
+			<section class="docsContainer">
+				<div>
+					<div id="docs_btn_group" class="docs_btn_group">
+						for _, subject := range subjects {
+							<button data-selected={ subject } class={ utils.FormatDocBtnClass(queryString, subject) }>
+								{ utils.FormatDocTitle(subject) }
+							</button>
+						}
+					</div>
+				</div>
+				<div>
+					<div id="accounts_docs" class={ utils.FormatDocTextClass(queryString, "accounts") }>
+						<h1>Accounts</h1>
+						<div class="doc_section">
+							<p>
+								You can create an account in one of two ways.
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>Email-registered Sign-up:</strong> Go to the <a href="/login">Login/Register page</a>, enter your email address, 
+								and submit. You will then receive an "email magic link" via email. The magic link is a unique login token that grants access 
+								to your account for 15 minutes. Please use it within this time frame as it can only be used once. 
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>Invite-registered Sign-up:</strong> If you've been invited to join a project, follow the "magic link" provided by the 
+								inviter. You'll then see the invite in your notifications tray and can complete the sign-up process. 
+							</p>
+						</div>
+						<div class="doc_note">
+							<p>
+								<strong>Note:</strong> For more information invites, see the Invites section.
+							</p>
+						</div>
+					</div>
+					<div id="projects_docs" class={ utils.FormatDocTextClass(queryString, "projects") }>
+						<h1>Projects</h1>
+						<div class="doc_section">
+							<p>Create projects from the Admin Page.</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>A project requires two essential details:</strong> A title and an account type. Please note that once set, the account type cannot be changed 
+								or downgraded. If you delete a project, it will automatically cancel any outstanding payment for the next month.
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>After creating a project:</strong> Navigate to the Admin Page and click on your project's name to access its API keys and members section. 
+								From here, you can generate API keys to enable API requests. For more information about inviting team members, refer to the Invites section 
+								of these documentation.
+							</p>
+						</div>
+						<div class="doc_note">
+							<p>
+								<strong>Note:</strong> For more information on using api keys see the Api Keys section. If you need more information
+								about logs ina project see the Logs section. 
+							</p>
+						</div>
+					</div>
+					<div id="apiKeys" class={ utils.FormatDocTextClass(queryString, "apiKeys") }>
+						<h1>Api Keys</h1>
+						<div class="doc_section">
+							<p>Create Api Keys from the project admin page.</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>Api Keys are used to POST logs:</strong> After posting your logs, they will be shown on the dashboard page for that project
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>The Api key must be present</strong> in an Authorization header: the body most contain a msg, type, and utc type stamp.
+							</p>
+						</div>
+						<div class="doc_note">
+							<p>
+								<strong>Note:</strong> For more information on viewing logs created, see the Logs section of the docs.
+							</p>
+						</div>
+					</div>
+					<div id="logs" class={ utils.FormatDocTextClass(queryString, "logs") }>
+						<h1>
+							Logs
+						</h1>
+						<div class="doc_section">
+							<p>
+								Logs are created using the api key with a POST request.
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>Info:</strong> Info is meant for client information such as load times and user stories. Use this to get an idea of how the client is being used.
+							</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>Error:</strong> Errors are meant to be inserted in your error and edge case handling. Use these to be notified about un expected behavior, and to 
+								track down hard to recreate bugs.
+							</p>
+						</div>
+						<div class="doc_note">
+							<p>
+								<strong>Note:</strong> For more information on creating logs, see the Api Keys section.
+							</p>
+						</div>
+					</div>
+					<div id="invites" class={ utils.FormatDocTextClass(queryString, "invites") }>
+						<h1>Invites</h1>
+						<div class="doc_section">
+							<p>Only admins of a project have the ability to invite users.</p>
+						</div>
+						<div class="doc_section">
+							<p>
+								<strong>How to invite:</strong> You can invite people to a project from the admin screen for the project. Enter their email address and click submit. 
+								The user will be sent an email to login and they will see the invite in their notifications tray. They do not need to have an existing account to be invited 
+								to a project—an account will be created for them automatically when they follow the link.
+							</p>
+						</div>
+						<div class="doc_note">
+							<p>
+								<strong>Note:</strong> If the person you invited doesn't have an account and doesn't follow the "magic link" you sent them in the invite, they 
+								will still be able to join the project. The notification to join will remain in their notifications tray.
+							</p>
+						</div>
+					</div>
+				</div>
+				<script type="module" src="/static/dist/scripts/docs_page.js"></script>
+			</section>
+		</body>
+	</html>
+}

@@ -1,0 +1,30 @@
+package components
+
+templ Nav(title string, path string) {
+	<nav class="nav">
+		<h1>AI Log Interpreter</h1>
+		<ul class="nav__list">
+			<li class="nav__item">
+				if path == "home" {
+					<a href="/" class="nav__link active">Home</a>
+				} else {
+					<a href="/" class="nav__link">Home</a>
+				}
+			</li>
+			<li class="nav__item">
+				if path == "docs" {
+					<a href="/docs/accounts" class="nav__link active">Docs</a>
+				} else {
+					<a href="/docs/accounts" class="nav__link">Docs</a>
+				}
+			</li>
+			<li class="nav__item">
+				if path == "login" {
+					<a href="/login" class="nav__link active">Login</a>
+				} else {
+					<a href="/login" class="nav__link">Login</a>
+				}
+			</li>
+		</ul>
+	</nav>
+}

@@ -1,0 +1,98 @@
+@use 'variables';
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: variables.$nav-bg;
+  height: variables.$nav-height;
+  padding: 0 variables.$nav-padding-x;
+  @media (max-width: variables.$small-screen) {
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0
+  }
+
+  h1 {
+    @media (max-width: variables.$small-screen) {
+      margin-bottom: 30px;
+    } 
+  }
+}
+
+.nav__list {
+  display: flex;
+  gap: 5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: variables.$nav-text;
+  border-radius: 0.25rem;
+  transition: background 0.2s;
+
+  &:hover,
+  &:focus {
+    color: variables.$nav-active-text;
+    outline: none;
+  }
+
+  &.active {
+    color: variables.$nav-active-text;
+  }
+
+  &.local-link {
+    color: variables.$nav-active-text;
+  }
+}
+
+.text__input {
+  border-radius: 10px;
+  padding: 7px 10px;
+  border: 1px solid #ccc;
+  &:focus {
+    border-color: variables.$color-primary;
+  }
+}
+
+.landing__card__section {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+
+  @media (max-width: variables.$small-screen) {
+    flex-direction: column;
+    padding: 0 2rem;
+    margin: 2rem 0;
+  }
+
+  div {
+    width: 400px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+    padding: 30px;
+
+    @media (max-width: variables.$small-screen) {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: gray
+    }
+  }
+}
+
+.hide__visibility {
+  visibility: hidden;
+}

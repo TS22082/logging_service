@@ -1,0 +1,86 @@
+@use 'variables';
+
+.btn {
+  border-radius: 10px;
+  padding: 7px 10px;
+  border: 1px solid;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn__normal {
+  background-color: white;
+  border-color: gray;
+  &:hover {
+    cursor: pointer;
+    background-color:  rgb(229.5, 229.5, 229.5);
+  }
+}
+
+.btn__primary {
+  background-color: variables.$color-primary;
+  color: white;
+  border-color:  variables.$color-primary;
+  &:hover {
+    background-color: rgb(111.9502074689, 53.6099585062, 136.3900414938);
+    border-color: rgb(111.9502074689, 53.6099585062, 136.3900414938);
+  }
+}
+
+.btn__caution {
+  background-color: variables.$color-caution;
+  color: white;
+  border-color:  variables.$color-caution;
+  &:hover {
+    background-color: rgb(213.698630137, 43.8356164384, 26.301369863);
+    border-color: rgb(213.698630137, 43.8356164384, 26.301369863);
+  }
+}
+
+.delete__link {
+  color: variables.$color-caution;
+  text-decoration: underline;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.primary__link {
+  color:  variables.$color-primary;
+  text-decoration: underline;
+}
+
+.home_btn_group {
+  @media (max-width: variables.$small-screen) {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
+}
+
+.docs_btn_group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+
+  @media (max-width: variables.$small-screen) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.docs_btn {
+  border: 1px solid variables.$color-gray;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+  height: 100px;
+  text-wrap: balance;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.docs_btn_active {
+  border-color: variables.$color-primary;
+}

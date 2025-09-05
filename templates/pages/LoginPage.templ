@@ -1,0 +1,29 @@
+package pages
+
+import "github.com/ts22082/logging-service/templates/components"
+
+templ LoginPage() {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="/static/dist/styles/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/reset.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/containers.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/buttons.css"/>
+		</head>
+		<body>
+			@components.Nav("Oggee", "login")
+			<section class="jumbo">
+				<h1 id="loginHeading">Enter your email, to be sent a magic link.</h1>
+				<p id="loginSupport">Follow the magic link to login to our service.</p>
+				<form class="loginForm" id="emailLoginForm">
+					<input class="text__input" type="text" name="email" placeholder="Email address"/>
+					<button id="submitLoginBtn" type="submit" class="btn btn__primary">Send Link!</button>
+				</form>
+			</section>
+			<script type="module" src="/static/dist/scripts/login_page.js"></script>
+		</body>
+	</html>
+}

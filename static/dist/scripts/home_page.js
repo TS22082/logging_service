@@ -1,0 +1,1 @@
+const t=document.getElementById("learnMoreBtn"),e=document.getElementById("logInBtn"),c=document.getElementById("createAccountBtn");t&&t.addEventListener("click",()=>{window.location.href="/docs/accounts"});[e,c].forEach(n=>{n&&n.addEventListener("click",()=>{window.location.href="/login"})});
