@@ -46,6 +46,8 @@ func main() {
 	router.HandleFunc("/", views.Home).Methods("GET")
 	router.HandleFunc("/docs/{subject}", views.Docs).Methods("GET")
 	router.HandleFunc("/login", views.Login).Methods("GET")
+	router.HandleFunc("/logout", views.Logout).Methods("GET")
+	router.HandleFunc("/dashboard", views.Dashboard).Methods("GET")
 	router.HandleFunc("/email/login_validate/{login_token}", views.LoginValidate).Methods("GET")
 	router.HandleFunc("/stream_test", views.StreamTest).Methods("GET")
 
