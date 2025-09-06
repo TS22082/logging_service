@@ -25,6 +25,5 @@ tasks:
       - '**/*.scss'
       - '**/*.templ'
       - '**/*.ts'
-      - '**/*.js'
     cmds:
       - task -p templ sass js

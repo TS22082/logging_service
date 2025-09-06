@@ -9,11 +9,18 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-func ValidateToken(r *http.Request) (interface{}, error) {
+type UserReturn struct {
+	Email string `json:"email,omitempty" bson:"email"`
+	Id    string `json:"id,omitempty" bson:"id"`
+}
+
+func ValidateToken(r *http.Request) (UserReturn, error) {
 	token, err := r.Cookie("token")
 
+	var user UserReturn
+
 	if err != nil {
-		return nil, errors.New("cannot parse token")
+		return user, errors.New("cannot parse token")
 	}
 
 	parsedToken, err := jwt.Parse(token.Value, func(token *jwt.Token) (interface{}, error) {
@@ -25,27 +32,23 @@ func ValidateToken(r *http.Request) (interface{}, error) {
 	})
 
 	if err != nil {
-		return nil, errors.New("cannot parse token")
+		return user, errors.New("cannot parse token")
 	}
 
 	if claims, ok := parsedToken.Claims.(jwt.MapClaims); ok && parsedToken.Valid {
 		if exp, ok := claims["exp"].(float64); ok {
 			if int64(exp) < time.Now().Unix() {
-				return nil, errors.New("token timed out")
+				return user, errors.New("token timed out")
 			}
 		} else {
-			return nil, errors.New("unknown error")
+			return user, errors.New("unknown error")
 		}
 
-		userEmail := claims["email"]
-		userId := claims["id"]
-
-		user := map[string]interface{}{
-			"id":    userId,
-			"email": userEmail,
-		}
+		user.Email = claims["email"].(string)
+		user.Id = claims["id"].(string)
 
 		return user, nil
 	}
-	return nil, errors.New("unknown error")
+
+	return user, errors.New("unknown error")
 }

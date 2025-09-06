@@ -1,8 +1,22 @@
 package pages
 
 import "github.com/ts22082/logging-service/templates/components"
+import "go.mongodb.org/mongo-driver/bson/primitive"
 
-templ DashboardPage() {
+type Project struct {
+	Id          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name        string             `json:"name" bson:"name"`
+	Plan        string             `json:"plan" bson:"plan"`
+	ApiKeyCount int                `json:"apiKeyCount" bson:"apiKeyCount"`
+}
+
+type ProjectRobust struct {
+	Project
+	KeyCount  int64 `json:"keyCount" bson:"keyCount"`
+	UserCount int64 `json:"userCount" bson:"userCount"`
+}
+
+templ DashboardPage(projectArr []ProjectRobust) {
 	<!DOCTYPE html>
 	<html>
 		<head>
@@ -16,9 +30,26 @@ templ DashboardPage() {
 		<body>
 			@components.UserNav("Oggee", "dashboard")
 			<section class="jumbo">
-				<h1 id="loginHeading">Dashboard Page.</h1>
+				<h1>Dashboard</h1>
+				<p>Click the project you want to see logs for.</p>
 			</section>
-			<script type="module" src="/static/dist/scripts/login_page.js"></script>
+			<section id="dashboardProjects" class="dashboard__project__section">
+				for _, project := range projectArr {
+					{{ projectLink := "/dashboard/logs/" + project.Id.Hex() }}
+					<div class="dashboard__project__card">
+						<a href={ projectLink }>{ project.Name }</a>
+						<p>Plan: { project.Plan }</p>
+						<p>User total: { project.UserCount }</p>
+						<p>Registered keys: { project.KeyCount }</p>
+						<div>
+							<button data-id={ project.Id.Hex() } class="btn btn__primary">
+								View Logs
+							</button>
+						</div>
+					</div>
+				}
+			</section>
+			<script type="module" src="/static/dist/scripts/dashboard_page.js"></script>
 		</body>
 	</html>
 }

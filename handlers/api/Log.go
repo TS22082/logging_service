@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -92,7 +93,11 @@ func Log(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "JSON Parsing Error", http.StatusInternalServerError)
 	}
 
-	if err := redisClient.Publish(ctx, "log_channel", redisResponseJSON).Err(); err != nil {
+	redisChannel := "project_logs/" + apiKey.ProjectId
+
+	fmt.Println("sent from here", redisChannel)
+
+	if err := redisClient.Publish(ctx, redisChannel, redisResponseJSON).Err(); err != nil {
 		log.Printf("Failed to publish to Redis: %v", err)
 	}
 

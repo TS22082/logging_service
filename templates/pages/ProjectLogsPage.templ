@@ -1,0 +1,35 @@
+package pages
+
+import (
+	"github.com/ts22082/logging-service/templates/components"
+	"github.com/ts22082/logging-service/utils/project_types"
+)
+
+templ ProjectLogsPage(logsArray []project_types.LogEntry) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="/static/dist/styles/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/reset.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/containers.css"/>
+		</head>
+		<body>
+			@components.UserNav("Oggee", "dashboard")
+			<section class="jumbo">
+				<h1>Project Logs</h1>
+				<p>View logs for project here.</p>
+			</section>
+			<main class="logs__container" id="logsContainer">
+				for _, log := range logsArray {
+					<div class="logs__card">
+						<h1>{ log.Type }:</h1>
+						<p>{ log.Message }</p>
+					</div>
+				}
+			</main>
+			<script type="module" src="/static/dist/scripts/project_logs_page.js"></script>
+		</body>
+	</html>
+}

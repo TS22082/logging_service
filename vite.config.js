@@ -15,6 +15,14 @@ export default defineConfig({
         docs_page: resolve(__dirname, "static/src/scripts/docs_page.ts"),
         login_page: resolve(__dirname, "static/src/scripts/login_page.ts"),
         home_page: resolve(__dirname, "static/src/scripts/home_page.ts"),
+        dashboard_page: resolve(
+          __dirname,
+          "static/src/scripts/dashboard_page.ts"
+        ),
+        project_logs_page: resolve(
+          __dirname,
+          "static/src/scripts/project_logs_page.ts"
+        ),
       },
       output: {
         entryFileNames: "[name].js",

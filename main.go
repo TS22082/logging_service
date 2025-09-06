@@ -48,14 +48,14 @@ func main() {
 	router.HandleFunc("/login", views.Login).Methods("GET")
 	router.HandleFunc("/logout", views.Logout).Methods("GET")
 	router.HandleFunc("/dashboard", views.Dashboard).Methods("GET")
+	router.HandleFunc("/dashboard/logs/{projectId}", views.ProjectLogs).Methods("GET")
 	router.HandleFunc("/email/login_validate/{login_token}", views.LoginValidate).Methods("GET")
-	router.HandleFunc("/stream_test", views.StreamTest).Methods("GET")
 
 	// API Routes - JSON endpoints for programmatic access
 	apiRoute := router.PathPrefix("/api").Subrouter()
 	apiRoute.HandleFunc("/log", api.Log).Methods("POST")
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")
-	apiRoute.HandleFunc("/stream", api.Stream).Methods("GET")
+	apiRoute.HandleFunc("/dashboard/logs/{projectId}/stream", api.ProjectLogsStream).Methods("GET")
 	apiRoute.HandleFunc("/health", healthCheck).Methods("GET")
 
 	srv := &http.Server{
