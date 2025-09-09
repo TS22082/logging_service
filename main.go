@@ -53,11 +53,9 @@ func main() {
 	apiRoute := router.PathPrefix("/api").Subrouter()
 	apiRoute.HandleFunc("/log", api.CreateLog).Methods("POST")
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")
-
 	apiRoute.HandleFunc("/project", api.CreateProject).Methods("POST")
 	apiRoute.HandleFunc("/project/{projectId}", api.DeleteProject).Methods("DELETE")
 	apiRoute.HandleFunc("/api-key", api.CreateApiKey).Methods("POST")
-
 	apiRoute.HandleFunc("/dashboard/logs/{projectId}/stream", api.ProjectLogsStream).Methods("GET")
 	apiRoute.HandleFunc("/health", healthCheck).Methods("GET")
 
