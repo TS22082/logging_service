@@ -48,7 +48,10 @@ newProjectForm &&
         plan: selectedPlan,
       };
 
-      const data = await internalRequest.Post("/project", requestBody);
+      const data = await internalRequest.Post("/api/project", requestBody);
+
+      console.log("Data ==>", data);
+
       const { id, name } = data;
       const newTableRow = createProjectRow({ id, name, plan: selectedPlan });
 

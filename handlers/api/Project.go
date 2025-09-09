@@ -16,7 +16,9 @@ type PostProjectRequestBody struct {
 	Plan    string `json:"plan" bson:"plan"`
 }
 
-func PostProject(w http.ResponseWriter, r *http.Request) {
+func Project(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	user, err := utils.ValidateToken(r)
 
 	mongodbContext, cancel := mongodb_client.GetContext(10 * time.Second)
@@ -31,6 +33,12 @@ func PostProject(w http.ResponseWriter, r *http.Request) {
 	userProjectRelCollection := mongodb_client.GetCollection("User_Project_Rel")
 
 	request := new(PostProjectRequestBody)
+
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		return
+	}
+
 	userEmail := user.Email
 
 	newProject := new(project_types.Project)
