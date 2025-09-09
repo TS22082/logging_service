@@ -23,6 +23,7 @@ export default defineConfig({
           __dirname,
           "static/src/scripts/project_logs_page.ts"
         ),
+        admin_page: resolve(__dirname, "static/src/scripts/admin_page.ts"),
       },
       output: {
         entryFileNames: "[name].js",

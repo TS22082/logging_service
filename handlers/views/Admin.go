@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/ts22082/logging-service/templates/pages"
+	"github.com/ts22082/logging-service/utils"
 	mongodb_client "github.com/ts22082/logging-service/utils/mongodb"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -15,6 +16,13 @@ import (
 
 func Admin(w http.ResponseWriter, r *http.Request) {
 
+	user, err := utils.ValidateToken(r)
+
+	if err != nil {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
 	mongoDbContext, cancel := mongodb_client.GetContext(10 * time.Second)
 	defer cancel()
 
@@ -22,7 +30,7 @@ func Admin(w http.ResponseWriter, r *http.Request) {
 	keyProjectRelCollection := mongodb_client.GetCollection("ApiKey")
 	projectCollection := mongodb_client.GetCollection("Projects")
 
-	userEmail := "ts2208@gmail.com"
+	userEmail := user.Email
 
 	var userProjectRel []ProjectUserRel
 	projectsMap := make(map[string]pages.ProjectRobust)
@@ -74,7 +82,7 @@ func Admin(w http.ResponseWriter, r *http.Request) {
 		projectsMap[v.ProjectId] = project
 	}
 
-	component := pages.ProjectsPage(projectsMap)
+	component := pages.AdminPage(projectsMap)
 	err = component.Render(r.Context(), w)
 
 	if err != nil {

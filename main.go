@@ -48,11 +48,12 @@ func main() {
 	router.HandleFunc("/dashboard", views.Dashboard).Methods("GET")
 	router.HandleFunc("/dashboard/logs/{projectId}", views.ProjectLogs).Methods("GET")
 	router.HandleFunc("/email/login_validate/{login_token}", views.LoginValidate).Methods("GET")
-	// router.HandleFunc("/admin", views.Admin).Methods("GET")
+	router.HandleFunc("/admin", views.Admin).Methods("GET")
 
 	apiRoute := router.PathPrefix("/api").Subrouter()
 	apiRoute.HandleFunc("/log", api.Log).Methods("POST")
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")
+	apiRoute.HandleFunc("/project", healthCheck).Methods("POST")
 	apiRoute.HandleFunc("/dashboard/logs/{projectId}/stream", api.ProjectLogsStream).Methods("GET")
 	apiRoute.HandleFunc("/health", healthCheck).Methods("GET")
 
