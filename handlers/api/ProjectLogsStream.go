@@ -29,14 +29,8 @@ func ProjectLogsStream(w http.ResponseWriter, r *http.Request) {
 	ctx := redis_client.GetContext()
 
 	vars := mux.Vars(r)
-
-	fmt.Println("cars ==>", vars)
-
 	projectId := vars["projectId"]
-
 	redisChannel := "project_logs/" + projectId
-
-	fmt.Println("cars ==>", redisChannel)
 
 	pubsub := client.Subscribe(ctx, redisChannel)
 	defer pubsub.Close()

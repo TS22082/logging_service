@@ -1,6 +1,7 @@
 package views
 
 import (
+	"fmt"
 	"net/http"
 	"slices"
 	"time"
@@ -33,6 +34,7 @@ func ProjectLogs(w http.ResponseWriter, r *http.Request) {
 	parsedProjectId, err := primitive.ObjectIDFromHex(projectId)
 
 	if err != nil {
+		fmt.Println("37: Problem here?", err)
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 	}
 
@@ -43,6 +45,7 @@ func ProjectLogs(w http.ResponseWriter, r *http.Request) {
 	var logs []project_types.LogEntry
 
 	if err := projectCollection.FindOne(mongoDbContext, projectFilter).Decode(&project.Project); err != nil {
+		fmt.Println("48: Problem here?", err)
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 		return
 	}
@@ -50,11 +53,13 @@ func ProjectLogs(w http.ResponseWriter, r *http.Request) {
 	cursor, err := logsCollection.Find(mongoDbContext, logsFilter)
 
 	if err != nil {
+		fmt.Println("56: Problem here?", err)
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 		return
 	}
 
 	if err := cursor.All(mongoDbContext, &logs); err != nil {
+		fmt.Println("62: Problem here?", err)
 		http.Redirect(w, r, "/dashboard", http.StatusFound)
 		return
 	}
@@ -68,5 +73,4 @@ func ProjectLogs(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "failed rendering template", http.StatusInternalServerError)
 		return
 	}
-
 }

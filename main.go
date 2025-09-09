@@ -37,12 +37,10 @@ func main() {
 
 	router.Use(loggingMiddleware)
 
-	// Serve static files (CSS, JS, images, etc.) from /static directory
 	router.PathPrefix("/static/").Handler(
 		http.StripPrefix("/static/", http.FileServer(http.Dir("static"))),
 	)
 
-	// HTML/View Routes - serve web pages to users
 	router.HandleFunc("/", views.Home).Methods("GET")
 	router.HandleFunc("/docs/{subject}", views.Docs).Methods("GET")
 	router.HandleFunc("/login", views.Login).Methods("GET")
@@ -50,8 +48,8 @@ func main() {
 	router.HandleFunc("/dashboard", views.Dashboard).Methods("GET")
 	router.HandleFunc("/dashboard/logs/{projectId}", views.ProjectLogs).Methods("GET")
 	router.HandleFunc("/email/login_validate/{login_token}", views.LoginValidate).Methods("GET")
+	// router.HandleFunc("/admin", views.Admin).Methods("GET")
 
-	// API Routes - JSON endpoints for programmatic access
 	apiRoute := router.PathPrefix("/api").Subrouter()
 	apiRoute.HandleFunc("/log", api.Log).Methods("POST")
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")

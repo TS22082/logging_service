@@ -15,12 +15,12 @@ import (
 )
 
 type LogEntry struct {
-	Id        string    `json:"id" bson:"id"`
-	Message   string    `json:"message" bson:"message"`
-	Type      string    `json:"type" bson:"type"`
-	Timestamp time.Time `json:"timestamp" bson:"timestamp"`
-	TraceID   string    `json:"traceId,omitempty"`
-	ProjectId string    `json:"projectId,omitempty" bson:"projectId"`
+	Id        string `json:"id" bson:"id"`
+	Message   string `json:"message" bson:"message"`
+	Type      string `json:"type" bson:"type"`
+	Timestamp string `json:"timestamp" bson:"timestamp"`
+	TraceID   string `json:"traceId,omitempty"`
+	ProjectId string `json:"projectId,omitempty" bson:"projectId"`
 }
 
 type ApiKey struct {
@@ -59,7 +59,7 @@ func Log(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logEntry.Timestamp = time.Now().UTC()
+	logEntry.Timestamp = time.Now().UTC().Format(time.RFC3339)
 
 	filter := bson.D{{Key: "token", Value: authToken}}
 	var apiKey ApiKey
@@ -85,8 +85,8 @@ func Log(w http.ResponseWriter, r *http.Request) {
 
 	redisResponseJSON, err := json.Marshal(map[string]interface{}{
 		"data":      logEntry,
-		"type":      "message",
-		"timestamp": time.Now().UTC(),
+		"type":      "success",
+		"timestamp": time.Now().UTC().Format(time.RFC3339),
 	})
 
 	if err != nil {
@@ -104,7 +104,7 @@ func Log(w http.ResponseWriter, r *http.Request) {
 	response := map[string]interface{}{
 		"data":      logEntry,
 		"type":      "message",
-		"timestamp": time.Now().UTC(),
+		"timestamp": time.Now().UTC().Format(time.RFC3339),
 	}
 
 	json.NewEncoder(w).Encode(response)

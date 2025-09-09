@@ -1,0 +1,80 @@
+package pages
+
+import "github.com/ts22082/logging-service/templates/components"
+
+templ ProjectsPage(projectsMap map[string]ProjectRobust) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="/static/dist/css/reset.css"/>
+			<link rel="stylesheet" href="/static/dist/css/utils.css"/>
+			<link rel="stylesheet" href="/static/dist/css/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/css/containers.css"/>
+			<link rel="stylesheet" href="/static/dist/css/buttons.css"/>
+		</head>
+		<body>
+			@components.UserNav("Oggee", "projects")
+			<section class="jumbo">
+				<h1>Project Page</h1>
+				<p>Click on the projects name in the table to view more information</p>
+			</section>
+			<div class="projectsMainContainer">
+				<section class="newProjectSection">
+					<form id="newProjectForm" class="newProjectForm">
+						<input name="projectInput" class="text__input w-100" type="text" placeholder="Enter Project Name ..."/>
+						<div class="account_options">
+							<label class="option__card">
+								<input type="radio" value="basic" name="account__option" checked/> Basic
+							</label>
+							<label class="option__card">
+								<input type="radio" value="team" name="account__option"/>
+								Team
+							</label>
+							<label class="option__card">
+								<input type="radio" value="pro" name="account__option"/>
+								Pro
+							</label>
+						</div>
+						<button id="projectSubmitBtn" type="submit" class="btn btn__primary">Add Project</button>
+						<div id="plan_description" class="planDescriptionContainer">
+							<p id="planDescriptionText">
+								Basic: Supports 1 user, 1 key and up to 100 logs p/month
+							</p>
+						</div>
+					</form>
+				</section>
+				<section class="projectListSection">
+					<table class="projectsTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Plan</th>
+								<th>Members</th>
+								<th>Keys</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="projectTableBody">
+							for _, project := range projectsMap {
+								{{ projectURl := "/project/" + project.Id.Hex() }}
+								{{ projectDeleteURl := "/project/delete/" + project.Id.Hex() }}
+								<tr>
+									<td>
+										<a class="primary__link" href={ projectURl }>{ project.Name }</a>
+									</td>
+									<td>{ project.Plan }</td>
+									<td>{ project.UserCount }</td>
+									<td>{ project.KeyCount }</td>
+									<td><a class="delete__link" href={ projectDeleteURl }>Delete</a></td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</section>
+			</div>
+			<script type="module" src="/static/dist/scripts/projects_page.js"></script>
+		</body>
+	</html>
+}
