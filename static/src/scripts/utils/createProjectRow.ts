@@ -15,7 +15,7 @@ export const createProjectRow = (props: createProjectsRowProps) => {
   const planTd = document.createElement("td");
 
   anchor_1.innerText = props.name;
-  anchor_1.href = `/project/${props.id}`;
+  anchor_1.href = `/admin/project/${props.id}`;
   anchor_1.classList.add("primary__link");
   td_2.innerText = "1";
   td_3.innerText = "0";
