@@ -20,12 +20,14 @@ export const createProjectRow = (props: createProjectsRowProps) => {
   td_2.innerText = "1";
   td_3.innerText = "0";
   deleteBtn_4.innerText = "Delete";
-  deleteBtn_4.setAttribute("data-project-delete", `/api/project/${props.id}`);
+  deleteBtn_4.setAttribute("data-project-id", props.id);
   deleteBtn_4.classList.add("delete__link");
   planTd.innerText = props.plan;
 
   td_1.appendChild(anchor_1);
   td_4.appendChild(deleteBtn_4);
+
+  tr.setAttribute("id", "project_" + props.id);
   tr.appendChild(td_1);
   tr.appendChild(planTd);
   tr.appendChild(td_2);

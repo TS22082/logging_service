@@ -72,7 +72,6 @@ projectTableBody?.addEventListener("click", (event) => {
   const btn = target?.closest("button");
 
   if (btn && deleteProjectPopover) {
-    // Check if it's specifically a delete button (optional)
     if (btn.classList.contains("delete__link")) {
       const projectId = btn.getAttribute("data-project-id");
       if (typeof projectId != "string") return;
