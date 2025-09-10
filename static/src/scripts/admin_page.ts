@@ -69,14 +69,12 @@ projectTableBody?.addEventListener("click", (event) => {
   const target = event.target as HTMLElement | null;
   const btn = target?.closest("button");
 
-  if (btn && deleteProjectPopover) {
-    if (btn.classList.contains("delete__link")) {
-      const projectId = btn.getAttribute("data-project-id");
-      if (typeof projectId != "string") return;
+  if (btn && btn.classList.contains("delete__link") && deleteProjectPopover) {
+    const projectId = btn.getAttribute("data-project-id");
+    if (!projectId) return;
 
-      deleteProjectPopover.setAttribute("data-delete-id", projectId);
-      deleteProjectPopover.showPopover();
-    }
+    deleteProjectPopover.setAttribute("data-delete-id", projectId);
+    deleteProjectPopover.showPopover();
   }
 });
 
