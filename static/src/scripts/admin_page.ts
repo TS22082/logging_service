@@ -74,10 +74,10 @@ projectTableBody?.addEventListener("click", (event) => {
   if (btn && deleteProjectPopover) {
     // Check if it's specifically a delete button (optional)
     if (btn.classList.contains("delete__link")) {
-      const deleteUrl = btn.getAttribute("data-project-delete");
-      if (typeof deleteUrl != "string") return;
+      const projectId = btn.getAttribute("data-project-id");
+      if (typeof projectId != "string") return;
 
-      deleteProjectPopover.setAttribute("data-delete-url", deleteUrl);
+      deleteProjectPopover.setAttribute("data-delete-id", projectId);
       deleteProjectPopover.showPopover();
     }
   }
@@ -85,7 +85,7 @@ projectTableBody?.addEventListener("click", (event) => {
 
 deleteProjectPopover?.addEventListener("toggle", (event) => {
   if (event.newState == "closed") {
-    deleteProjectPopover?.setAttribute("data-delete-url", "");
+    deleteProjectPopover?.setAttribute("data-delete-id", "");
   }
 });
 
@@ -94,14 +94,17 @@ cancelDeleteProject?.addEventListener("click", () => {
 });
 
 confirmDeleteProject?.addEventListener("click", async (event) => {
-  const projectDeleteUrl =
-    deleteProjectPopover?.getAttribute("data-delete-url");
+  const projectDeleteId = deleteProjectPopover?.getAttribute("data-delete-id");
 
-  if (!projectDeleteUrl || typeof projectDeleteUrl !== "string") return;
+  if (!projectDeleteId || typeof projectDeleteId !== "string") return;
 
   try {
-    const response = await internalRequest.Delete(projectDeleteUrl);
-    console.log("Response ==>", response);
+    await internalRequest.Delete(`/api/project/${projectDeleteId}`);
+
+    const projectRow = document.getElementById("project_" + projectDeleteId);
+    projectRow?.remove();
+
+    deleteProjectPopover?.hidePopover();
   } catch (error) {
     console.log("Error =>", error);
   }

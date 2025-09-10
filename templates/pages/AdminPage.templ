@@ -68,15 +68,14 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 						<tbody id="projectTableBody">
 							for _, project := range projectsMap {
 								{{ projectURl := "/project/" + project.Id.Hex() }}
-								{{ projectDeleteURl := "/api/project/" + project.Id.Hex() }}
-								<tr>
+								<tr id={ "project_" + project.Id.Hex() }>
 									<td>
 										<a class="primary__link" href={ projectURl }>{ project.Name }</a>
 									</td>
 									<td>{ project.Plan }</td>
 									<td>{ project.UserCount }</td>
 									<td>{ project.KeyCount }</td>
-									<td><button class="delete__link" data-project-delete={ projectDeleteURl }>Delete</button></td>
+									<td><button class="delete__link" data-project-id={ project.Id.Hex() }>Delete</button></td>
 								</tr>
 							}
 						</tbody>
