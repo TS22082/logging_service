@@ -95,13 +95,7 @@ confirmDeleteProject?.addEventListener("click", async (event) => {
   const projectDeleteId = deleteProjectPopover?.getAttribute("data-delete-id");
   const projectRow = document.getElementById("project_" + projectDeleteId);
 
-  if (
-    !projectDeleteId ||
-    typeof projectDeleteId !== "string" ||
-    !deleteProjectPopover ||
-    !projectRow
-  )
-    return;
+  if (!projectDeleteId || !deleteProjectPopover || !projectRow) return;
 
   try {
     await internalRequest.Delete(`/api/project/${projectDeleteId}`);
