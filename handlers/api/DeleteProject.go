@@ -20,7 +20,7 @@ func DeleteProject(w http.ResponseWriter, r *http.Request) {
 
 	projectsCollection := mongodb_client.GetCollection("Projects")
 	userProjectRelCollection := mongodb_client.GetCollection("User_Project_Rel")
-	keyProjectRelCollection := mongodb_client.GetCollection("Key_Project_Rel")
+	apiKeyCollection := mongodb_client.GetCollection("ApiKey")
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
@@ -41,17 +41,17 @@ func DeleteProject(w http.ResponseWriter, r *http.Request) {
 	})
 
 	g.Go(func() error {
-		_, err := userProjectRelCollection.DeleteOne(_ctx, deleteProjectFilter)
+		_, err := userProjectRelCollection.DeleteOne(_ctx, deleteRelFilter)
 		return err
 	})
 
 	g.Go(func() error {
-		_, err := keyProjectRelCollection.DeleteOne(_ctx, deleteRelFilter)
+		_, err := apiKeyCollection.DeleteOne(_ctx, deleteRelFilter)
 		return err
 	})
 
 	if err := g.Wait(); err != nil {
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		http.Error(w, "Error deleting Items", http.StatusBadRequest)
 	}
 
 	response := map[string]bool{

@@ -61,6 +61,7 @@ func Admin(w http.ResponseWriter, r *http.Request) {
 		err = projectCollection.FindOne(mongoDbContext, filter).Decode(&project.Project)
 
 		if errors.Is(err, mongo.ErrNoDocuments) {
+			fmt.Println("Corrupted Data ==>", v)
 			http.Error(w, "No Documents", http.StatusExpectationFailed)
 		}
 

@@ -33,6 +33,18 @@ export const deleteProjectButton = document.getElementById(
   "deleteProjectButton"
 );
 
+export const deleteProjectPopover = document.getElementById(
+  "delete-project-popover"
+);
+
+export const cancelDeleteProject = document.getElementById(
+  "cancelDeleteProject"
+);
+
+export const confirmDeleteProject = document.getElementById(
+  "confirmDeleteProject"
+);
+
 export const createApiKeyBtn = document.getElementById("createApiKey");
 export const tableBody = document.getElementById("keyTable");
 export const deleteBtns = document.querySelectorAll(".delete__link");

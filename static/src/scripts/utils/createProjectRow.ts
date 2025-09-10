@@ -11,7 +11,7 @@ export const createProjectRow = (props: createProjectsRowProps) => {
   const td_2 = document.createElement("td");
   const td_3 = document.createElement("td");
   const td_4 = document.createElement("td");
-  const anchor_4 = document.createElement("a");
+  const deleteBtn_4 = document.createElement("button");
   const planTd = document.createElement("td");
 
   anchor_1.innerText = props.name;
@@ -19,13 +19,13 @@ export const createProjectRow = (props: createProjectsRowProps) => {
   anchor_1.classList.add("primary__link");
   td_2.innerText = "1";
   td_3.innerText = "0";
-  anchor_4.innerText = "Delete";
-  anchor_4.href = `/project/delete/${props.id}`;
-  anchor_4.classList.add("delete__link");
+  deleteBtn_4.innerText = "Delete";
+  deleteBtn_4.setAttribute("data-project-delete", `/api/project/${props.id}`);
+  deleteBtn_4.classList.add("delete__link");
   planTd.innerText = props.plan;
 
   td_1.appendChild(anchor_1);
-  td_4.appendChild(anchor_4);
+  td_4.appendChild(deleteBtn_4);
   tr.appendChild(td_1);
   tr.appendChild(planTd);
   tr.appendChild(td_2);

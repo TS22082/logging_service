@@ -31,7 +31,7 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"/static/dist/styles/reset.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/utils.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/styles.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/containers.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/buttons.css\"></head><body>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><link rel=\"stylesheet\" href=\"/static/dist/styles/reset.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/utils.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/styles.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/modal.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/containers.css\"><link rel=\"stylesheet\" href=\"/static/dist/styles/buttons.css\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -39,13 +39,13 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<section class=\"jumbo\"><h1>Project Page</h1><p>Click on the projects name in the table to view more information</p></section><div class=\"projectsMainContainer\"><section class=\"newProjectSection\"><form id=\"newProjectForm\" class=\"newProjectForm\"><input name=\"projectInput\" class=\"text__input w-100\" type=\"text\" placeholder=\"Enter Project Name ...\"><div class=\"account_options\"><label class=\"option__card\"><input type=\"radio\" value=\"basic\" name=\"account__option\" checked> Basic</label> <label class=\"option__card\"><input type=\"radio\" value=\"team\" name=\"account__option\"> Team</label> <label class=\"option__card\"><input type=\"radio\" value=\"pro\" name=\"account__option\"> Pro</label></div><button id=\"projectSubmitBtn\" type=\"submit\" class=\"btn btn__primary\">Add Project</button><div id=\"plan_description\" class=\"planDescriptionContainer\"><p id=\"planDescriptionText\">Basic: Supports 1 user, 1 key and up to 100 logs p/month</p></div></form></section><section class=\"projectListSection\"><table class=\"projectsTable\"><thead><tr><th>Name</th><th>Plan</th><th>Members</th><th>Keys</th><th>Actions</th></tr></thead> <tbody id=\"projectTableBody\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<section class=\"jumbo\"><h1>Project Page</h1><p>Click on the projects name in the table to view more information</p></section><div popover id=\"delete-project-popover\" class=\"key_modal\"><h1 class=\"mb-20\">Delete this Project?</h1><p class=\"mb-20\">This is not reversible, the project and its api keys will be deleted.</p><div><button id=\"cancelDeleteProject\" class=\"btn btn__normal\">Cancel</button> <button id=\"confirmDeleteProject\" class=\"btn btn__caution\">Delete</button></div></div><div class=\"projectsMainContainer\"><section class=\"newProjectSection\"><form id=\"newProjectForm\" class=\"newProjectForm\"><input name=\"projectInput\" class=\"text__input w-100\" type=\"text\" placeholder=\"Enter Project Name ...\"><div class=\"account_options\"><label class=\"option__card\"><input type=\"radio\" value=\"basic\" name=\"account__option\" checked> Basic</label> <label class=\"option__card\"><input type=\"radio\" value=\"team\" name=\"account__option\"> Team</label> <label class=\"option__card\"><input type=\"radio\" value=\"pro\" name=\"account__option\"> Pro</label></div><button id=\"projectSubmitBtn\" type=\"submit\" class=\"btn btn__primary\">Add Project</button><div id=\"plan_description\" class=\"planDescriptionContainer\"><p id=\"planDescriptionText\">Basic: Supports 1 user, 1 key and up to 100 logs p/month</p></div></form></section><section class=\"projectListSection\"><table class=\"projectsTable\"><thead><tr><th>Name</th><th>Plan</th><th>Members</th><th>Keys</th><th>Actions</th></tr></thead> <tbody id=\"projectTableBody\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		for _, project := range projectsMap {
 			projectURl := "/project/" + project.Id.Hex()
-			projectDeleteURl := "/project/delete/" + project.Id.Hex()
+			projectDeleteURl := "/api/project/" + project.Id.Hex()
 			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<tr><td><a class=\"primary__link\" href=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
@@ -53,7 +53,7 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			var templ_7745c5c3_Var2 templ.SafeURL
 			templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinURLErrs(projectURl)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 65, Col: 52}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 74, Col: 52}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 			if templ_7745c5c3_Err != nil {
@@ -66,7 +66,7 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(project.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 65, Col: 69}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 74, Col: 69}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -79,7 +79,7 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(project.Plan)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 67, Col: 27}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 76, Col: 27}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -92,7 +92,7 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(project.UserCount)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 68, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 77, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -105,26 +105,26 @@ func AdminPage(projectsMap map[string]ProjectRobust) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(project.KeyCount)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 69, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 78, Col: 31}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</td><td><a class=\"delete__link\" href=\"")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</td><td><button class=\"delete__link\" data-project-delete=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			var templ_7745c5c3_Var7 templ.SafeURL
-			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinURLErrs(projectDeleteURl)
+			var templ_7745c5c3_Var7 string
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(projectDeleteURl)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 70, Col: 60}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/pages/AdminPage.templ`, Line: 79, Col: 80}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\">Delete</a></td></tr>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "\">Delete</button></td></tr>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

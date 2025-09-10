@@ -11,6 +11,7 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 			<link rel="stylesheet" href="/static/dist/styles/reset.css"/>
 			<link rel="stylesheet" href="/static/dist/styles/utils.css"/>
 			<link rel="stylesheet" href="/static/dist/styles/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/modal.css"/>
 			<link rel="stylesheet" href="/static/dist/styles/containers.css"/>
 			<link rel="stylesheet" href="/static/dist/styles/buttons.css"/>
 		</head>
@@ -20,6 +21,14 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 				<h1>Project Page</h1>
 				<p>Click on the projects name in the table to view more information</p>
 			</section>
+			<div popover id="delete-project-popover" class="key_modal">
+				<h1 class="mb-20">Delete this Project?</h1>
+				<p class="mb-20">This is not reversible, the project and its api keys will be deleted.</p>
+				<div>
+					<button id="cancelDeleteProject" class="btn btn__normal">Cancel</button>
+					<button id="confirmDeleteProject" class="btn btn__caution">Delete</button>
+				</div>
+			</div>
 			<div class="projectsMainContainer">
 				<section class="newProjectSection">
 					<form id="newProjectForm" class="newProjectForm">
@@ -59,7 +68,7 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 						<tbody id="projectTableBody">
 							for _, project := range projectsMap {
 								{{ projectURl := "/project/" + project.Id.Hex() }}
-								{{ projectDeleteURl := "/project/delete/" + project.Id.Hex() }}
+								{{ projectDeleteURl := "/api/project/" + project.Id.Hex() }}
 								<tr>
 									<td>
 										<a class="primary__link" href={ projectURl }>{ project.Name }</a>
@@ -67,7 +76,7 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 									<td>{ project.Plan }</td>
 									<td>{ project.UserCount }</td>
 									<td>{ project.KeyCount }</td>
-									<td><a class="delete__link" href={ projectDeleteURl }>Delete</a></td>
+									<td><button class="delete__link" data-project-delete={ projectDeleteURl }>Delete</button></td>
 								</tr>
 							}
 						</tbody>

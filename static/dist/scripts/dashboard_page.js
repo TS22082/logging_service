@@ -1,1 +1,1 @@
-import{g as c}from"./constants-CTJscLYK.js";var d;(d=c)==null||d.addEventListener("click",a=>{const t=a.target,o=t==null?void 0:t.closest(".btn"),s=o==null?void 0:o.getAttribute("data-id");s&&(window.location.href=`/dashboard/logs/${s}`)});
+import{g as c}from"./constants-6zwyP_62.js";var d;(d=c)==null||d.addEventListener("click",a=>{const t=a.target,o=t==null?void 0:t.closest(".btn"),s=o==null?void 0:o.getAttribute("data-id");s&&(window.location.href=`/dashboard/logs/${s}`)});

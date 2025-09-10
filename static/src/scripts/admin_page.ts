@@ -4,6 +4,10 @@ import {
   planDescriptions,
   newProjectForm,
   projectTableBody,
+  deleteProjectPopover,
+  cancelDeleteProject,
+  confirmDeleteBtn,
+  confirmDeleteProject,
 } from "./utils/constants";
 import { createProjectRow } from "./utils/createProjectRow";
 import { internalRequest } from "./utils/internalRequest";
@@ -62,3 +66,43 @@ newProjectForm &&
       formInput.value = "";
     }
   });
+
+projectTableBody?.addEventListener("click", (event) => {
+  const target = event.target as HTMLElement | null;
+  const btn = target?.closest("button");
+
+  if (btn && deleteProjectPopover) {
+    // Check if it's specifically a delete button (optional)
+    if (btn.classList.contains("delete__link")) {
+      const deleteUrl = btn.getAttribute("data-project-delete");
+      if (typeof deleteUrl != "string") return;
+
+      deleteProjectPopover.setAttribute("data-delete-url", deleteUrl);
+      deleteProjectPopover.showPopover();
+    }
+  }
+});
+
+deleteProjectPopover?.addEventListener("toggle", (event) => {
+  if (event.newState == "closed") {
+    deleteProjectPopover?.setAttribute("data-delete-url", "");
+  }
+});
+
+cancelDeleteProject?.addEventListener("click", () => {
+  deleteProjectPopover?.hidePopover();
+});
+
+confirmDeleteProject?.addEventListener("click", async (event) => {
+  const projectDeleteUrl =
+    deleteProjectPopover?.getAttribute("data-delete-url");
+
+  if (!projectDeleteUrl || typeof projectDeleteUrl !== "string") return;
+
+  try {
+    const response = await internalRequest.Delete(projectDeleteUrl);
+    console.log("Response ==>", response);
+  } catch (error) {
+    console.log("Error =>", error);
+  }
+});
