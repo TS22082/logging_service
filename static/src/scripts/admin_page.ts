@@ -54,8 +54,6 @@ newProjectForm &&
 
       const data = await internalRequest.Post("/api/project", requestBody);
 
-      console.log("Data ==>", data);
-
       const { id, name } = data;
       const newTableRow = createProjectRow({ id, name, plan: selectedPlan });
 
@@ -89,21 +87,26 @@ deleteProjectPopover?.addEventListener("toggle", (event) => {
 });
 
 cancelDeleteProject?.addEventListener("click", () => {
-  deleteProjectPopover?.hidePopover();
+  if (!deleteProjectPopover) return;
+  deleteProjectPopover.hidePopover();
 });
 
 confirmDeleteProject?.addEventListener("click", async (event) => {
   const projectDeleteId = deleteProjectPopover?.getAttribute("data-delete-id");
+  const projectRow = document.getElementById("project_" + projectDeleteId);
 
-  if (!projectDeleteId || typeof projectDeleteId !== "string") return;
+  if (
+    !projectDeleteId ||
+    typeof projectDeleteId !== "string" ||
+    !deleteProjectPopover ||
+    !projectRow
+  )
+    return;
 
   try {
     await internalRequest.Delete(`/api/project/${projectDeleteId}`);
-
-    const projectRow = document.getElementById("project_" + projectDeleteId);
-    projectRow?.remove();
-
-    deleteProjectPopover?.hidePopover();
+    projectRow.remove();
+    deleteProjectPopover.hidePopover();
   } catch (error) {
     console.log("Error =>", error);
   }
