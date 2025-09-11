@@ -1,0 +1,97 @@
+package pages
+
+import "github.com/ts22082/logging-service/templates/components"
+import "github.com/ts22082/logging-service/utils/project_types"
+
+templ AdminProjectPage(apiKeys []project_types.ApiKey) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<link rel="stylesheet" href="/static/dist/styles/reset.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/utils.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/styles.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/modal.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/containers.css"/>
+			<link rel="stylesheet" href="/static/dist/styles/buttons.css"/>
+		</head>
+		<body>
+			@components.UserNav("Oggee", "dashboard")
+			<div popover id="delete-key-popover" class="key_modal">
+				<h1 class="mb-20">Delete this key?</h1>
+				<p class="mb-20">This is not reversible, this api key will no longer be able to make requests to the system.</p>
+				<div>
+					<button id="cancelDeleteKey" class="btn btn__normal">Cancel</button>
+					<button id="confirmDeleteBtn" class="btn btn__caution">Delete</button>
+				</div>
+			</div>
+			<dialog class="key_modal" id="showKeyModal">
+				<h1 class="mb-20">This is your api key</h1>
+				<p class="mb-20">Copy the key and save it somewhere safe, this will not be shows again.</p>
+				<code id="keyText"></code>
+				<div class="mt-20">
+					<button id="closeKeyModalBtn" class="btn btn__normal">Close</button>
+				</div>
+			</dialog>
+			<section class="jumbo">
+				<h1>Project Admin Page</h1>
+				<p>Here, you can add members and create API keys for the project.</p>
+			</section>
+			<div class="projectsMainContainer">
+				<section class="addMemberSection">
+					<form>
+						<input class="text__input" placeholder="Enter email address here"/>
+						<button class="btn btn__primary">Add Project Member</button>
+					</form>
+					<table class="projectsTable">
+						<thead>
+							<tr>
+								<th>Email</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>wow</td>
+								<td>wow</td>
+								<td>wow</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
+				<section class="addKeySection">
+					<form id="createApiKey">
+						<button id="submitKeyBtn" type="submit" class="btn btn__primary">Create API Key</button>
+					</form>
+					<table class="projectsTable">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Requests</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="keyTable">
+							for _, apiKey := range apiKeys {
+								{{ trId := "tr-" + apiKey.Id.Hex() }}
+								<tr id={ trId }>
+									<td>...{ apiKey.Token }</td>
+									<td>{ apiKey.Count } </td>
+									<td>
+										<button class="delete__link" data-id={ apiKey.Id.Hex() }>
+											Delete 
+										</button>
+									</td>
+								</tr>
+							}
+							// Keys get added in js file
+						</tbody>
+					</table>
+				</section>
+			</div>
+			<script type="module" src="/static/dist/scripts/admin_project_page.js"></script>
+		</body>
+	</html>
+}

@@ -41,6 +41,7 @@ func main() {
 		http.StripPrefix("/static/", http.FileServer(http.Dir("static"))),
 	)
 
+	// Routes responsible for page view
 	router.HandleFunc("/", views.Home).Methods("GET")
 	router.HandleFunc("/docs/{subject}", views.Docs).Methods("GET")
 	router.HandleFunc("/login", views.Login).Methods("GET")
@@ -49,7 +50,9 @@ func main() {
 	router.HandleFunc("/dashboard/logs/{projectId}", views.ProjectLogs).Methods("GET")
 	router.HandleFunc("/email/login_validate/{login_token}", views.LoginValidate).Methods("GET")
 	router.HandleFunc("/admin", views.Admin).Methods("GET")
+	router.HandleFunc("/admin/project/{projectId}", views.AdminProject).Methods("GET")
 
+	// Routes responsible for api requests
 	apiRoute := router.PathPrefix("/api").Subrouter()
 	apiRoute.HandleFunc("/log", api.CreateLog).Methods("POST")
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")

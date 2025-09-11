@@ -67,7 +67,7 @@ templ AdminPage(projectsMap map[string]ProjectRobust) {
 						</thead>
 						<tbody id="projectTableBody">
 							for _, project := range projectsMap {
-								{{ projectURl := "/project/" + project.Id.Hex() }}
+								{{ projectURl := "/admin/project/" + project.Id.Hex() }}
 								<tr id={ "project_" + project.Id.Hex() }>
 									<td>
 										<a class="primary__link" href={ projectURl }>{ project.Name }</a>

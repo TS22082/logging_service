@@ -12,7 +12,11 @@ func Docs(w http.ResponseWriter, r *http.Request) {
 	subjects := [5]string{"accounts", "projects", "apiKeys", "logs", "invites"}
 
 	vars := mux.Vars(r)
-	subject := vars["subject"]
+	subject, exists := vars["subject"]
+
+	if !exists {
+		http.Error(w, "Incorrect input", http.StatusExpectationFailed)
+	}
 
 	component := pages.DocsPage(subject, subjects)
 	err := component.Render(r.Context(), w)
