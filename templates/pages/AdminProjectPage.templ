@@ -17,7 +17,7 @@ templ AdminProjectPage(apiKeys []project_types.ApiKey) {
 			<link rel="stylesheet" href="/static/dist/styles/buttons.css"/>
 		</head>
 		<body>
-			@components.UserNav("Oggee", "dashboard")
+			@components.UserNav("Oggee", "projects")
 			<div popover id="delete-key-popover" class="key_modal">
 				<h1 class="mb-20">Delete this key?</h1>
 				<p class="mb-20">This is not reversible, this api key will no longer be able to make requests to the system.</p>
