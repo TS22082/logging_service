@@ -1,3 +1,4 @@
+import { createLogCard } from "./utils/createLogCard";
 import { getIdFromUrl } from "./utils/getIdFromUrl";
 
 let eventSource: EventSource;
@@ -17,7 +18,12 @@ function connectToStream() {
 
     try {
       const data = JSON.parse(event.data);
-      console.log("Data ==>", data);
+
+      if (data.type != "success") return;
+
+      const logsContainer = document.getElementById("logsContainer");
+      const logCard = createLogCard(data.data);
+      logsContainer?.prepend(logCard);
     } catch (error) {
       console.error("Error parsing message:", error);
     }
