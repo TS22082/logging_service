@@ -1,0 +1,1 @@
+import{J as t}from"./constants-bC8bNLSd.js";const r={Post:async(e,s)=>await(await fetch(e,{method:"POST",body:JSON.stringify(s),headers:t})).json(),Put:async e=>await(await fetch(e,{method:"PUT",headers:t})).json(),Delete:async e=>await(await fetch(e,{method:"DELETE",headers:t})).json()};export{r as i};

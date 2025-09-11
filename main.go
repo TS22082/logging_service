@@ -58,7 +58,8 @@ func main() {
 	apiRoute.HandleFunc("/send_login_link", api.SendLoginLink).Methods("POST")
 	apiRoute.HandleFunc("/project", api.CreateProject).Methods("POST")
 	apiRoute.HandleFunc("/project/{projectId}", api.DeleteProject).Methods("DELETE")
-	apiRoute.HandleFunc("/api-key", api.CreateApiKey).Methods("POST")
+	apiRoute.HandleFunc("/key", api.CreateApiKey).Methods("POST")
+	apiRoute.HandleFunc("/key/{apiKeyId}", api.DeleteApiKey).Methods("DELETE")
 	apiRoute.HandleFunc("/dashboard/logs/{projectId}/stream", api.ProjectLogsStream).Methods("GET")
 	apiRoute.HandleFunc("/health", healthCheck).Methods("GET")
 

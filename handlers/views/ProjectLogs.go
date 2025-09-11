@@ -26,10 +26,10 @@ func ProjectLogs(w http.ResponseWriter, r *http.Request) {
 	projectCollection := mongodb_client.GetCollection("Projects")
 	logsCollection := mongodb_client.GetCollection("Logs")
 	mongoDbContext, cancel := mongodb_client.GetContext(10 * time.Second)
+	defer cancel()
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
-	defer cancel()
 
 	parsedProjectId, err := primitive.ObjectIDFromHex(projectId)
 

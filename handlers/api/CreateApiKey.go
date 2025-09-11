@@ -45,5 +45,11 @@ func CreateApiKey(w http.ResponseWriter, r *http.Request) {
 
 	apiKey.Id = newApiKeyRes.InsertedID.(primitive.ObjectID)
 
-	json.NewEncoder(w).Encode(apiKey)
+	response := map[string]interface{}{
+		"success": true,
+		"msg":     "New api key created",
+		"data":    apiKey,
+	}
+
+	json.NewEncoder(w).Encode(response)
 }
