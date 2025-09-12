@@ -59,7 +59,7 @@ func ProjectLogsStream(w http.ResponseWriter, r *http.Request) {
 		case <-heartbeat.C:
 			fmt.Fprintf(w, "data: %s\n\n", toSSEData(StreamMessage{
 				Type:      "heartbeat",
-				Data:      "ping",
+				Data:      "BOOP",
 				Timestamp: time.Now(),
 			}))
 			w.(http.Flusher).Flush()
