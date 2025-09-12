@@ -26,13 +26,12 @@ func ProjectLogsStream(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Cache-Control")
 
 	client := redis_client.GetClient()
-	ctx := redis_client.GetContext()
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
 	redisChannel := "project_logs/" + projectId
 
-	pubsub := client.Subscribe(ctx, redisChannel)
+	pubsub := client.Subscribe(r.Context(), redisChannel)
 	defer pubsub.Close()
 
 	clientGone := r.Context().Done()

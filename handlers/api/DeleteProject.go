@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/mux"
 	mongodb_client "github.com/ts22082/logging-service/utils/mongodb"
@@ -14,9 +13,6 @@ import (
 
 func DeleteProject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-
-	mongodbContext, cancel := mongodb_client.GetContext(10 * time.Second)
-	defer cancel()
 
 	projectsCollection := mongodb_client.GetCollection("Projects")
 	userProjectRelCollection := mongodb_client.GetCollection("User_Project_Rel")
@@ -30,7 +26,7 @@ func DeleteProject(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 	}
 
-	g, _ctx := errgroup.WithContext(mongodbContext)
+	g, _ctx := errgroup.WithContext(r.Context())
 
 	deleteProjectFilter := bson.D{{Key: "_id", Value: projectIdHex}}
 	deleteRelFilter := bson.D{{Key: "projectId", Value: projectId}}

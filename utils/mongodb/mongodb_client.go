@@ -24,7 +24,6 @@ type Config struct {
 }
 
 func Init(config *Config) error {
-	// Default configuration
 	if config == nil {
 		config = &Config{
 			URI:      getEnvOrDefault("MONGODB_URI", "mongodb://localhost:27017"),
@@ -33,14 +32,11 @@ func Init(config *Config) error {
 		}
 	}
 
-	// Create context with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), config.Timeout)
 	defer cancel()
 
-	// Set client options
 	clientOptions := options.Client().ApplyURI(config.URI)
 
-	// Connect to MongoDB
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		return err

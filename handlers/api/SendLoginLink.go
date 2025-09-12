@@ -22,8 +22,6 @@ type EmailLoginToken struct {
 
 func SendLoginLink(w http.ResponseWriter, r *http.Request) {
 	emailLoginTokenCollection := mongodb_client.GetCollection("Email_Login_Token")
-	mongoDbContext, cancel := mongodb_client.GetContext(10 * time.Second)
-	defer cancel()
 
 	emailLoginToken := new(EmailLoginToken)
 
@@ -58,7 +56,7 @@ func SendLoginLink(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := emailLoginTokenCollection.InsertOne(mongoDbContext, emailLoginToken)
+	_, err := emailLoginTokenCollection.InsertOne(r.Context(), emailLoginToken)
 
 	if err != nil {
 		http.Error(w, "DB Write Error", http.StatusInternalServerError)

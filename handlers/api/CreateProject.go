@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/ts22082/logging-service/utils"
 	mongodb_client "github.com/ts22082/logging-service/utils/mongodb"
@@ -20,9 +19,6 @@ func CreateProject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	user, err := utils.ValidateToken(r)
-
-	mongodbContext, cancel := mongodb_client.GetContext(10 * time.Second)
-	defer cancel()
 
 	if err != nil {
 		http.Redirect(w, r, "/login", http.StatusFound)
@@ -49,7 +45,7 @@ func CreateProject(w http.ResponseWriter, r *http.Request) {
 	newProject.Name = request.Project
 	newProject.Plan = request.Plan
 
-	newProjectRes, err := projectsCollection.InsertOne(mongodbContext, newProject)
+	newProjectRes, err := projectsCollection.InsertOne(r.Context(), newProject)
 
 	if err != nil {
 		http.Error(w, "Error Iterating", http.StatusInternalServerError)
@@ -58,7 +54,7 @@ func CreateProject(w http.ResponseWriter, r *http.Request) {
 	newProject.Id = newProjectRes.InsertedID.(primitive.ObjectID)
 	newUserProjectRel.ProjectId = newProject.Id.Hex()
 
-	_, err = userProjectRelCollection.InsertOne(mongodbContext, newUserProjectRel)
+	_, err = userProjectRelCollection.InsertOne(r.Context(), newUserProjectRel)
 
 	if err != nil {
 		http.Error(w, "Error Iterating", http.StatusInternalServerError)
