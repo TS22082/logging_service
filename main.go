@@ -64,11 +64,12 @@ func main() {
 	apiRoute.HandleFunc("/health", healthCheck).Methods("GET")
 
 	srv := &http.Server{
-		Addr:         ":8080",
-		Handler:      router,
-		ReadTimeout:  15 * time.Second,
-		WriteTimeout: 15 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		Addr:              ":8080",
+		Handler:           router,
+		ReadTimeout:       0,
+		WriteTimeout:      0,
+		IdleTimeout:       0,
+		ReadHeaderTimeout: 10 * time.Second,
 	}
 
 	go func() {
